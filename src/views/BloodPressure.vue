@@ -62,7 +62,7 @@ const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.name || !form.value.systolic || !form.value.diastolic || !form.value.time) return
-  await addRecord(STORE, { ...form.value })
+  await addRecord(STORE, { ...form.value, time: form.value.time.replace('T', ' ') })
   form.value = { name: '', systolic: null, diastolic: null, time: getDefaultDateTime() }
   await loadRecords()
 }

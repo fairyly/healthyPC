@@ -68,7 +68,7 @@ const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.level || !form.value.type || !form.value.time) return
-  await addRecord(STORE, { ...form.value })
+  await addRecord(STORE, { ...form.value, time: form.value.time.replace('T', ' ') })
   form.value = { level: null, type: '', time: getDefaultDateTime() }
   await loadRecords()
 }

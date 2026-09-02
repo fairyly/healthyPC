@@ -54,7 +54,7 @@ const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.bpm || !form.value.time) return
-  await addRecord(STORE, { ...form.value })
+  await addRecord(STORE, { ...form.value, time: form.value.time.replace('T', ' ') })
   form.value = { bpm: null, time: getDefaultDateTime() }
   await loadRecords()
 }

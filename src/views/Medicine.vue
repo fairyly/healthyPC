@@ -58,7 +58,7 @@ const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.name || !form.value.dosage || !form.value.time) return
-  await addRecord(STORE, { ...form.value })
+  await addRecord(STORE, { ...form.value, time: form.value.time.replace('T', ' ') })
   form.value = { name: '', dosage: '', time: getDefaultDateTime() }
   await loadRecords()
 }
