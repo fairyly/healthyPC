@@ -46,14 +46,20 @@
 import { ref, onMounted } from 'vue'
 import { addRecord, getAllRecords, deleteRecord } from '../db'
 
+function getDefaultDateTime() {
+  const d = new Date()
+  const pad = n => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
 const STORE = 'medicine'
-const form = ref({ name: '', dosage: '', time: '' })
+const form = ref({ name: '', dosage: '', time: getDefaultDateTime() })
 const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.name || !form.value.dosage || !form.value.time) return
   await addRecord(STORE, { ...form.value })
-  form.value = { name: '', dosage: '', time: '' }
+  form.value = { name: '', dosage: '', time: getDefaultDateTime() }
   await loadRecords()
 }
 

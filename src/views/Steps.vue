@@ -42,14 +42,20 @@
 import { ref, onMounted } from 'vue'
 import { addRecord, getAllRecords, deleteRecord } from '../db'
 
+function getDefaultDate() {
+  const d = new Date()
+  const pad = n => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
 const STORE = 'steps'
-const form = ref({ steps: null, date: '' })
+const form = ref({ steps: null, date: getDefaultDate() })
 const records = ref([])
 
 async function handleSubmit() {
   if (!form.value.steps || !form.value.date) return
   await addRecord(STORE, { ...form.value })
-  form.value = { steps: null, date: '' }
+  form.value = { steps: null, date: getDefaultDate() }
   await loadRecords()
 }
 
